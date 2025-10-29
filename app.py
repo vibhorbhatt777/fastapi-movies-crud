@@ -23,10 +23,8 @@ async def read_movies():
 # ================================
 @app.get("/movies/{movie_title}")
 async def read_movie_by_title(movie_title: str):
-    for movie in MOVIES:
-        if movie.get("title").casefold() == movie_title.casefold():
-            return movie
-    return {"error": "Movie not found"}
+    movie = next((m for m in MOVIES if m.get("title").casefold() == movie_title.casefold()), None)
+    return movie if movie is not None else {"error": "Movie not found"}
 
 
 # ================================
